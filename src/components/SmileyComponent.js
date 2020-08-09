@@ -1,35 +1,68 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Alert } from 'reactstrap';
 
 export const IconComponent = (humor) => {
-  switch (humor) {
-    case 100:
+    if(humor >= 100){
       return "😂";
-    case 75:
-      return "😅";
-    case 50:
+    }
+    if(humor >= 75){
       return "😁";
-    case 25:
+    }
+    if(humor >= 50){
+      return "😅";
+    }
+    if(humor >= 25){
       return "😊";
-    case 0:
+    }
+    if(humor >= 5){
+      return "😏";
+    }
+    if(humor >= 0){
       return "😐";
-    case -25:
+    }
+    if(humor >= -25){
       return "😕";
-    case -50:
+    }
+    if(humor >= -50){
       return "😒";
-    case -75:
+    }
+    if(humor >= -75){
       return "😔";
-    case -100:
+    }
+    if(humor >= -100){
       return "😖";
-    default:
-      break;
-  }
+    }
 }
 
 export const Smiley = (props) => {
   return (
-    <h1 className="smiley">
-      <Link to={props.link}>{IconComponent(props.humor)}</Link>
-    </h1>
+    <div className="smiley-container">
+      <Alert color="primary">
+        <h1 className="smiley">
+          <Link 
+            title="Click me!" 
+            to={props.link}
+          >
+            <span role="img" aria-label="smiley">{IconComponent(props.humor)}</span>
+          </Link>
+        </h1>
+        <h2 className="humorLabel">
+            Humor:&nbsp; 
+              { props.humor !== 0 
+                  ? props.humor < 0 
+                  ? props.humor.toString().substr(1) + '%'
+                  : props.humor + '%'
+                  :''
+                }
+              { props.humor !== 0 
+                  ? props.humor < 0
+                  ?' triste' 
+                  :' feliz' 
+                  :' normal'
+                }
+        </h2>
+      </Alert>
+    </div>
   )
 }

@@ -1,34 +1,20 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Container } from 'reactstrap';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { setHumor, setLink, setModal, setJoke } from "./actions/appActions";
 import jokeService from "./services/jokeApiService";
-import './App.css';
+import './assets/styles/global.css';
 
 import { Smiley } from './components/SmileyComponent';
-import { Modaljokes } from './components/ModaljokesComponent';
+import Modaljokes from './components/ModaljokesComponent';
 
 class App extends Component {
-  /*
-  state = {
-    humor: this.props.humor,
-    link: '',
-    modal: '',
-    joke: ''
-  } 
-  */ 
-  componentDidMount() {
-    if(this.props.modal === true){
-      setJoke(getJoke());
-    }
+  renderJoke = async() => {
+    let joke = await getJoke();
+    setJoke(joke);
   }
-
-  renderJoke = () => {
-    //alert(getJoke());
-  }
-
       
   render() {
     let { 
@@ -43,22 +29,26 @@ class App extends Component {
     } = this.props;
 
     const buttonHandle = async (props) => {
-      let joke = await getJoke();
-      setJoke(joke);
-      setHumor(25);
-     // setHumor(this.props.humor + 25);
+      setJoke( await getJoke());
+      let newHumor = props.humor + Math.round((Math.random() * 25));
+      if(newHumor <= 100){
+        humorHandle(newHumor);
+      }else{
+        humorHandle(100);
+        setModal(false);
+      }
 ;    }
+
+      const humorHandle = humor =>{
+        setHumor(humor);
+      }
 
     const NavItem = (props) => {
       setHumor(props.humor)
       setLink(props.link)
-      if(props.modal === true){
-          //let joke = getJoke();
-          //setJoke(joke);
-          setModal(props.modal);
-        } 
-        return (<></>);
-      }
+      setModal(props.modal);
+      return (<></>);
+    }
     
     
     return (
@@ -69,18 +59,6 @@ class App extends Component {
               link={link}
               humor={humor}
             />
-          
-            <Fragment><h2 className="humorLabel">Nível de humor: {humor}%</h2></Fragment>
-            <Fragment><h2 className="humorLabel">Modal: {modal} </h2></Fragment>
-            <Fragment><h2 className="humorLabel">Joke: {joke}</h2></Fragment>
-
-            <Modaljokes 
-              setModal={setModal} 
-              modal={modal} 
-              joke={joke} 
-              getJoke={() => { buttonHandle(this.props) }} 
-            />
-
 
             <Switch>
               <Route exact path="/">
@@ -90,9 +68,18 @@ class App extends Component {
                 <NavItem humor={-100} setHumor={this.setHumor} link={'/meconteumapiada'} modal={false}/>
               </Route>
               <Route exact path="/meconteumapiada">
-                <NavItem humor={-100} setHumor={this.setHumor} link={'/mecontaumapiada'} modal={true}/>
+                <NavItem humor={humor} setHumor={this.setHumor} link={'/meconteumapiada'} modal={true}/>
               </Route>
             </Switch>
+            <Modaljokes
+              setModal={setModal} 
+              modal={modal} 
+              humor={humor}
+              joke={joke} 
+              getJoke={() => { 
+                buttonHandle(this.props) 
+              }} 
+            />
           </Router>
         </Container>
       </main>
@@ -117,6 +104,8 @@ const getJoke = async () => {
     })
     return joke;
 }
+
+
 
 
 
