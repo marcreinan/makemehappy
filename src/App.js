@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container } from 'reactstrap';
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { setHumor, setLink, setModal, setJoke } from "./actions/appActions";
@@ -35,7 +35,6 @@ class App extends Component {
         humorHandle(newHumor);
       }else{
         humorHandle(100);
-        setModal(false);
       }
 ;    }
 
@@ -47,7 +46,7 @@ class App extends Component {
       setHumor(props.humor)
       setLink(props.link)
       setModal(props.modal);
-      return (<></>);
+      return <></>;
     }
     
     
@@ -65,21 +64,31 @@ class App extends Component {
                 <NavItem humor={0} setHumor={this.setHumor} link={'/estoutriste'} modal={false}/>
               </Route>
               <Route exact path="/estoutriste">
-                <NavItem humor={-100} setHumor={this.setHumor} link={'/meconteumapiada'} modal={false}/>
+                <NavItem humor={-100} setHumor={this.setHumor} link={'/meconteumapiada'} modal={true}/>
               </Route>
               <Route exact path="/meconteumapiada">
-                <NavItem humor={humor} setHumor={this.setHumor} link={'/meconteumapiada'} modal={true}/>
+                <NavItem humor={humor} setHumor={this.setHumor} link={'/fim'} modal={modal}/>
+              </Route>
+              <Route exact path="/fim">
+                <NavItem humor={0} setHumor={this.setHumor} link={'/estoutriste'} modal={false}/>
               </Route>
             </Switch>
-            <Modaljokes
-              setModal={setModal} 
-              modal={modal} 
-              humor={humor}
-              joke={joke} 
-              getJoke={() => { 
-                buttonHandle(this.props) 
-              }} 
-            />
+            {link === "/fim"?
+              <Modaljokes
+                setModal={setModal} 
+                modal={modal} 
+                humor={humor}
+                joke={joke} 
+                getJoke={() => { 
+                  buttonHandle(this.props) 
+                }} 
+                />
+                :('')
+            }
+            {(humor>=100 && modal === false)
+              ?redirect('/')
+              :('')
+            }
           </Router>
         </Container>
       </main>
@@ -97,6 +106,7 @@ const mapDispatchToProps = dispatch =>
   
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
+const redirect = link => <Redirect to={link} />;
 const getJoke = async () => {
     let joke = '';
     await jokeService.getJoke().then( res => {

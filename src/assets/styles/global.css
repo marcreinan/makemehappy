@@ -30,6 +30,7 @@ body{
   background: linear-gradient(to bottom,  #258dc8 0%,#258dc8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#258dc8', endColorstr='#258dc8',GradientType=0 ); /* IE6-9 */
   text-decoration: none;
+  font-size: 2rem;
 }
 
 *{
@@ -58,17 +59,33 @@ a{
   text-align: center;
 }
 
+.smiley-container {
+  padding-top: 2rem;
+}
+
 .smiley{
   flex: 1;
   font-size: 20rem;
   margin-bottom: 0.8rem;
-
-  transform: scale(1);
-  animation: pulse 2s infinite;
-  }
+}
 
 .smiley > a {
   text-decoration: none;
+}
+
+.smiley-triste{
+  transform: scale(1);
+  animation: pulse 0.1s infinite;
+}
+
+.smiley-feliz{
+  transform: scale(1);
+  animation: pulse 0.2s infinite;
+}
+
+.smiley-normal{
+  transform: scale(1);
+  animation: pulse 0s infinite;
 }
 
   @keyframes pulse {
@@ -91,4 +108,11 @@ a{
 
   .modalJoke{
     top: 30rem;
+  }
+
+  .modal.fade .modal-dialog {
+    -webkit-transition: -webkit-transform 0.3s ease-out;
+       -moz-transition: -moz-transform 0.3s ease-out;
+         -o-transition: -o-transform 0.3s ease-out;
+            transition: transform 0.3s ease-out;
   }

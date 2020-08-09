@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -23,15 +22,23 @@ const Modaljokes = (props) => {
   
     return (
       <div>
-        <Modal isOpen={modal} toggle={toggle} className="modalJoke">
-          <ModalHeader><span role="img" aria-label="Livro">📖</span> Ler piada</ModalHeader>
+        <Modal isOpen={modal} className="modalJoke">
+          <ModalHeader>
+            {(humor >= 100)
+              ?<span role="img" aria-label="Estrela">✨ Parabens</span>
+              :<span role="img" aria-label="Livro">📖 Ler piada</span>
+            }
+          </ModalHeader>
           <ModalBody>
             {
               (humor >= 100)
-              ?("✨Parabéns, você deixou nossa SPA muito feliz! Muito obrigado ✨")
+              ? <>
+                  <h3>Você deixou nossa SPA 100% feliz! Muito obrigado, aqui está sua recompensa!</h3>
+                  <iframe title="Gandalf Sax" width="100%" height="200" src="https://www.youtube.com/embed/G1IbRujko-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" autoplay allowfullscreen></iframe>
+                </>
               :
                 !(joke)
-                ?(`Olá visitante⭐ melhore o dia da nossa SPA contando piadas, cada piada melhora ou piora o humor dela entre 1 e 25%. Ao se sentir 100% feliz ela libera o acesso a sua recompensa, Boa sorte 🖖`)
+                ?`Olá visitante⭐ melhore o dia da nossa SPA contando piadas, cada piada melhora ou piora o humor dela entre 1 e 25%. Ao se sentir 100% feliz ela libera o acesso a sua recompensa, Boa sorte 🖖`
                 :(joke)
             }
           </ModalBody>
@@ -42,15 +49,12 @@ const Modaljokes = (props) => {
             }            
           </ModalFooter>
         </Modal>
-        {(humor>=100 && modal === false)
-          ?setTimeout(redirect('/'), 1000)
-          :('')
-        }
+        
       </div>
     );
 }
 
-const redirect = link => <Redirect to={link} />;
+
 const mapStateToProps = store => ({
   humor: store.appState.humor,
   modal: store.appState.modal,

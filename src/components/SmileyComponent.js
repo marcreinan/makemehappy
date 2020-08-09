@@ -39,7 +39,11 @@ export const Smiley = (props) => {
   return (
     <div className="smiley-container">
       <Alert color="primary">
-        <h1 className="smiley">
+        <h1 className={props.humor !== 0 
+                        ?props.humor > 1 
+                          ?'smiley smiley-feliz'
+                          :'smiley smiley-triste'
+                        :'smiley smiley-normal'}>
           <Link 
             title="Click me!" 
             to={props.link}
