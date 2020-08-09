@@ -47,3 +47,7 @@ a{
   .humorLabel{
     flex: 1
   }
+
+  .modalJoke{
+    top: 50vh;
+  }

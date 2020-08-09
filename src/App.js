@@ -1,22 +1,37 @@
 import React, { Component, Fragment } from "react";
-import { Container, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Container } from 'reactstrap';
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { setHumor, setLink, setModal, setJoke } from "./actions/appActions";
 import jokeService from "./services/jokeApiService";
 import './App.css';
 
+import { Smiley } from './components/SmileyComponent';
+import { Modaljokes } from './components/ModaljokesComponent';
+
 class App extends Component {
+  /*
   state = {
-    humor: '',
+    humor: this.props.humor,
     link: '',
     modal: '',
     joke: ''
-  }  
-    
+  } 
+  */ 
+  componentDidMount() {
+    if(this.props.modal === true){
+      setJoke(getJoke());
+    }
+  }
+
+  renderJoke = () => {
+    //alert(getJoke());
+  }
+
+      
   render() {
-    const { 
+    let { 
       setHumor,
       humor,
       setLink,
@@ -26,21 +41,25 @@ class App extends Component {
       setJoke,
       joke 
     } = this.props;
-    let flag = false;
+
+    const buttonHandle = async (props) => {
+      let joke = await getJoke();
+      setJoke(joke);
+      setHumor(25);
+     // setHumor(this.props.humor + 25);
+;    }
+
     const NavItem = (props) => {
-      
       setHumor(props.humor)
       setLink(props.link)
-      setModal(props.modal)
-      if(props.modal === true && flag === false){
-        jokeService.getJoke().then( (res) => { 
-          setJoke(res.data.joke)
-          flag = true;
-        } )
+      if(props.modal === true){
+          //let joke = getJoke();
+          //setJoke(joke);
+          setModal(props.modal);
+        } 
+        return (<></>);
       }
-      
-      return (<></>);
-    };
+    
     
     return (
       <main>
@@ -55,17 +74,23 @@ class App extends Component {
             <Fragment><h2 className="humorLabel">Modal: {modal} </h2></Fragment>
             <Fragment><h2 className="humorLabel">Joke: {joke}</h2></Fragment>
 
-            <ModalConnected modal={modal} joke={joke} />
+            <Modaljokes 
+              setModal={setModal} 
+              modal={modal} 
+              joke={joke} 
+              getJoke={() => { buttonHandle(this.props) }} 
+            />
+
 
             <Switch>
               <Route exact path="/">
-                <NavItem humor={0} link={'/estoutriste'} modal={false}/>
+                <NavItem humor={0} setHumor={this.setHumor} link={'/estoutriste'} modal={false}/>
               </Route>
               <Route exact path="/estoutriste">
-                <NavItem humor={-100} link={'/meconteumapiada'} modal={false}/>
+                <NavItem humor={-100} setHumor={this.setHumor} link={'/meconteumapiada'} modal={false}/>
               </Route>
               <Route exact path="/meconteumapiada">
-                <NavItem humor={-100} link={'/mecontaumapiada'} modal={true}/>
+                <NavItem humor={-100} setHumor={this.setHumor} link={'/mecontaumapiada'} modal={true}/>
               </Route>
             </Switch>
           </Router>
@@ -85,67 +110,14 @@ const mapDispatchToProps = dispatch =>
   
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
-//export default connect( store => ({ humor: store.appState.humor }))(App);
-
-const getIcon = (humor) => {
-  switch (humor) {
-    case 100:
-      return "😂";
-    case 75:
-      return "😅";
-    case 50:
-      return "😁";
-    case 25:
-      return "😊";
-    case 0:
-      return "😐";
-    case -25:
-      return "😕";
-    case -50:
-      return "😒";
-    case -75:
-      return "😔";
-    case -100:
-      return "😖";
-    default:
-      break;
-  }
-}
-
-const Smiley = (props) => {
-  return (
-    <h1 className="smiley">
-      <Link to={props.link}>{getIcon(props.humor)}</Link>
-    </h1>
-  )
-}
-
-const ModalPiadas = (props) => {
-  const { 
-    modal,
-    setModal,
-    joke 
-  } = props;
-
-  const toggle = ()=> { setModal(!modal) }
-
-    return (
-      <div>
-        <Modal isOpen={modal} toggle={toggle}>
-          <ModalHeader toggle={toggle}>Contar piada</ModalHeader>
-          <ModalBody>
-            {joke}
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-          </ModalFooter>
-        </Modal>
-      </div>
-    );
+const getJoke = async () => {
+    let joke = '';
+    await jokeService.getJoke().then( res => {
+      joke = res.data.joke;
+    })
+    return joke;
 }
 
 
-const ModalConnected = connect((store) => ({ modal: store.appState.modal, joke: store.appState.joke }), dispatch =>
-  bindActionCreators({ setModal },dispatch))(ModalPiadas);
 
 
