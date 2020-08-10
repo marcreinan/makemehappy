@@ -21,36 +21,35 @@ const Modaljokes = (props) => {
   const nextJoke = ()=> { getJoke() }
   
     return (
-      <div>
+      <>
         <Modal isOpen={modal} className="modalJoke">
           <ModalHeader>
-            {(humor >= 100)
-              ?<span role="img" aria-label="Estrela">✨ Parabens</span>
-              :<span role="img" aria-label="Livro">📖 Ler piada</span>
+            { (joke !== '')
+              ?(humor >= 100)
+                ?<h3><span role="img" aria-label="Estrela">✨</span> Parabéns, aqui está sua recompensa!</h3>
+                :<h3><span role="img" aria-label="Livro">📖</span> Ler piada</h3>
+              :<h3><span role="img" aria-label="Estrela">⭐</span> Olá visitante</h3>
             }
           </ModalHeader>
           <ModalBody>
             {
               (humor >= 100)
-              ? <>
-                  <h3>Você deixou nossa SPA 100% feliz! Muito obrigado, aqui está sua recompensa!</h3>
-                  <iframe title="Gandalf Sax" width="100%" height="200" src="https://www.youtube.com/embed/G1IbRujko-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" autoplay allowfullscreen></iframe>
-                </>
-              :
-                !(joke)
-                ?`Olá visitante⭐ melhore o dia da nossa SPA contando piadas, cada piada melhora ou piora o humor dela entre 1 e 25%. Ao se sentir 100% feliz ela libera o acesso a sua recompensa, Boa sorte 🖖`
+              ? <iframe title="Gandalf Sax" width="100%" height="200" src="https://www.youtube.com/embed/G1IbRujko-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" autoplay="1" allowfullscreen></iframe>
+              :!(joke)
+                ?`Melhore o humor da nossa SPA contando piadas geek, cada piada melhora ou piora o seu humor entre 1 e 25%. Caso fique 100% feliz, ela libera uma recompensa. Boa sorte 🖖`
                 :(joke)
             }
           </ModalBody>
           <ModalFooter>
-            {(humor >= 100)
-              ?(<Button color="success" onClick={toggle}>Fechar</Button>)
-              :(<Button color="primary" onClick={nextJoke}>Ler Piada</Button>)
+            {(joke !== '')
+              ?(humor >= 100)
+                ?(<Button className="btn-lg" color="success" onClick={toggle}>Fechar</Button>)
+                :(<Button className="btn-lg" color="primary" onClick={nextJoke}>Próxima Piada</Button>)
+              :(<Button className="btn-lg" color="info" onClick={nextJoke}>Iniciar</Button>)
             }            
           </ModalFooter>
         </Modal>
-        
-      </div>
+      </>
     );
 }
 

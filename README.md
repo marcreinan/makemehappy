@@ -1,68 +1,140 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Make Me Happy
+### Conte piadas e faça uma SPA feliz!
 
-## Available Scripts
+ Consiste em um projeto frontend de integração com a [Geek Joke Api](https://github.com/sameerkumar18/geek-joke-api) para consumir e exibir as piadas geradas pela api, o projeto foi criado utilizando os seguintes recursos:
 
-In the project directory, you can run:
+- React.js: para a criação da estrutura do projeto e dos componentes jsx da interface gráfica.
+- Bootstrap: para criação da grid, estilização dos elementos e do layout.
+- Redux: para gerenciamento centralizado do estado da aplicação.
+- Axios: para a execução de HTTP Requests para a api .
+- Jest: para execução de testes na aplicação.
+- Yarn: para gerenciamento dos pacotes e dependências do projeto
 
+  
+Outros módulos de apoio incluem: React, React-dom, React-router-dom, React-redux e Reactstrap
+
+  
+
+## ✅ Instalação
+
+Faça o download a partir do link: https://github.com/marcreinan/makemehappy.zip e descompacte em uma pasta de sua preferência. Ou caso você tenha o GIT e o YARN instalados em seu computador, digite no terminal o seguinte comando dentro da pasta de sua preferência:
+
+```bash
+git clone https://github.com/marcreinan/makemehappy.git
+```
+Aguarde até que o zip termine de descompactar ou o git termine de baixar os arquivos.
+
+Entre na pasta makemehappy, e digite os comandos para instalar as dependencias e rodar o projeto:
+```  bash
+cd makemehappy
+yarn
+yarn start
+```
+O comando `yarn`  faz o download das dependência do projeto, já o comando `yarn start` inicia um servidor de desenvolvimento local para rodar o projeto. 
+Aguarde até que os comandos finalizem no terminal, o projeto deverá ficar online e disponivel em http://localhost:3000, acesse o endereço em seu navegador e confira se está tudo ok!
+
+  
+
+## ☔ Dependências
+
+Para correta execução desse projeto é necessário que você tenha instalado o YARN, o Node.js e o React.js. Baixe as versões para seu S.O nos links abaixo. 
+Utilize o comando `yarn` na pasta do projeto para download dos módulos.
+
+  
+
+## 🚀 Tecnologias
+
+Esse projeto foi desenvolvido com as seguintes tecnologias:
+
+[REACT.JS](https://pt-br.reactjs.org/)
+[BOOTSTRAP](https://getbootstrap.com/docs/4.5/getting-started/introduction/)
+[REDUX](https://redux.js.org/)
+[AXIOS](https://github.com/axios/axios)
+[JEST](https://jestjs.io/)
+[YARN](https://yarnpkg.com/)
+  
+
+## 📃 Scripts disponíveis
+
+Dentro da pasta do projeto, você poderá executar os seguintes comandos:
 ### `yarn start`
+Inicia o projeto em modo de desenvolvimento.<br />
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Abre [http://localhost:3000](http://localhost:3000) para que você visualize o projeto em seu navegador.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+A página irá recarregar automaticamente caso você faça alguma alteração no código.<br />
 
+Você poderá ver os erros no console.
+
+  
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Inicia a suite de testes em modo interativo.<br />
+
+Mostrando quais os testes que foram executados com sucesso e quais falharam.
+
 
 ### `yarn build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Faz a build do projeto para ser enviado para o ambiente de produção, a cópia otimizada é armazenada na pasta `build`.<br />
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Essa versão é otimizada para uma melhor performance e carregamento.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Os arquivos da build são minificados e são adicionados hashes em seus nomes.<br />
+  
 
-### `yarn eject`
+## 🧙 Funcionamento
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  O objetivo é tornar a SPA 100% feliz, para isso é necessário ir gerando novas piadas até atingir o grau máximo de felicidade.
+  O humor da SPA varia entre -100%(triste), 0(normal) e 100%(feliz).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Tela inicial - rota [/](http://localhost:3000/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Na tela inicial, temos a apresentação do app e o elemento Smiley, uma carinha(emoji) que demonstra o nível de humor da SPA, a qual começa com um nível normal (0).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![Tela Inicial](https://picsum.photos/400)
 
-## Learn More
+  
+### Tela Estou Triste - rota [/estoutriste](http://localhost:3000/estoutriste)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Ao clicar na tela inicial, o usuário é levado para tela Estou triste, onde o nível de humor do SPA é 100% triste (-100%) e a cara do Smiley muda refletindo o seu humor tristonho.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Tela Estou Triste](http://picsum.photos/400)
 
-### Code Splitting
+  
+### Tela Me Faça Feliz - rota [/mefacafeliz](http://localhost:3000/mefacafeliz)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Ao clicar na tela Estou Triste, o usuário é levado para a tela Me Faça Feliz, onde é exibida uma modal contendo piadas geek.![Tela Me Faça Feliz](http://picsum.photos/400)
+Na primeira vez que o usuário acessa essa tela, é mostrado um aviso sobre o seu funcionamento.
 
-### Analyzing the Bundle Size
+obs1: Caso o usuário recomece o jogo esse aviso na modal não será mostrado e a piada será gerada logo ao entrar na tela. 
+obs2: Caso o usuário entre diretamente nessa tela (chamando-a diretamente na url do navegador) e os estados estejam com valores inválidos, será redirecionado para a tela inicial.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+  
+A cada piada lida, o usuário tem entre 1 e 25% (valor gerado randomicamente) de chance de melhorar o humor da SPA, conforme a SPA vai melhorando seu humor, o Smiley muda seu rosto, a cor de fundo é alterada e o indicador de nível de humor também é atualizado.
+![Tela Me Faça Feliz- Smiley alegre](http://picsum.photos/400)
 
-### Making a Progressive Web App
+Assim que seu humor atingir 100% de felicidade a SPA libera o modal e mostra a recompensa do usuário, uma foto aleatória de algum lugar do mundo,ao fecha a modal o app é reiniciado na tela inicial.
+![Tela Parabens](http://picsum.photos/400)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
 
-### Advanced Configuration
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## 🧐 Estados Possíveis 
+| Nível de humor| Smiley  |
+|-------|----|
+|= 100% | 😂 |
+|>=  85%| 😁 |
+|>=  75%| 😅 |
+|>=  65%| 😄 |
+|>=  50%| 😄 |
+|>=  35%| 😊 |
+|>=  20%| 😏 |
+|>=  10%| 🙂 |
+|>=  0% | 😐 |
+|>= -15%| 🙁 |
+|>= -25%| 😕 |
+|>= -35%| 🤨 |
+|>= -50%| 😒 |
+|>= -75%| 😔 |
+|>= -85%| 😖 |
+|>= -100| 😫 |

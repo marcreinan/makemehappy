@@ -10,6 +10,7 @@ import './assets/styles/global.css';
 import { Smiley } from './components/SmileyComponent';
 import Modaljokes from './components/ModaljokesComponent';
 
+
 class App extends Component {
   renderJoke = async() => {
     let joke = await getJoke();
@@ -54,19 +55,23 @@ class App extends Component {
       <main>
         <Container fluid className="main">
           <Router>
+            <h1 className="main-title">
+              Make Me Happy <br/>
+              <small>Conte piadas e faça uma SPA feliz</small>
+            </h1>
             <Smiley
               link={link}
               humor={humor}
             />
-
+            
             <Switch>
               <Route exact path="/">
                 <NavItem humor={0} setHumor={this.setHumor} link={'/estoutriste'} modal={false}/>
               </Route>
               <Route exact path="/estoutriste">
-                <NavItem humor={-100} setHumor={this.setHumor} link={'/meconteumapiada'} modal={true}/>
+                <NavItem humor={-100} setHumor={this.setHumor} link={'/mefacafeliz'} modal={true}/>
               </Route>
-              <Route exact path="/meconteumapiada">
+              <Route exact path="/mefacafeliz">
                 <NavItem humor={humor} setHumor={this.setHumor} link={'/fim'} modal={modal}/>
               </Route>
               <Route exact path="/fim">
@@ -85,7 +90,7 @@ class App extends Component {
                 />
                 :('')
             }
-            {(humor>=100 && modal === false)
+            {(humor>=100 && modal === false) || (humor===0 && modal === false)
               ?redirect('/')
               :('')
             }
