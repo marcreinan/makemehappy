@@ -1,10 +1,10 @@
-import { 
-  SET_HUMOR, 
-  SET_MODAL, 
-  SET_LINK, 
-  SET_JOKE
-} from '../actions/actionsTypes';
+import { SET_HUMOR, SET_MODAL, SET_LINK, SET_JOKE } from '../actions/actionsTypes';
 
+/**
+ * Reducer responsável pelo gerenciamento do estado do componente App
+ */
+
+ /** Estado inicial da aplicação */
 const initialState = { 
   humor: 0, 
   link: '/estoutriste', 
@@ -12,6 +12,7 @@ const initialState = {
   joke: ''
 };
 
+/** Chamadas das Actions para atualizar os estados */
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_HUMOR:

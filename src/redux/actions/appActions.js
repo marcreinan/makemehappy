@@ -1,10 +1,10 @@
+import { SET_HUMOR, SET_MODAL, SET_LINK, SET_JOKE } from './actionsTypes';
+
 /**
  * Actions para manipular os estados referentes ao componente App,
  * definindo o valor do estado de acordo com a função chamada e o
- * novo valor
+ * novo valor informado
  */
-import { SET_HUMOR, SET_MODAL, SET_LINK, SET_JOKE } from './actionsTypes';
-
 
 /** Seta o valor do estado humor */
 export const setHumor = value => ({

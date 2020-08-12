@@ -1,3 +1,7 @@
+/**
+* Estilos do componente Modaljokes
+*/
+
 .modal{
   display: flex !important;  
   align-items: flex-end;

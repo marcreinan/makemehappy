@@ -1,14 +1,16 @@
-/**
- * Testes do componente App.js , consistindo em verificar
- *  se os elementos estão presentes no documento
- * 
- * @author: Marc Reinan Gomes
- */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import store from "./redux/store/index";
 import App from './App';
+
+/**
+ * Testes do componente App.js , consistindo em navegar nas telas
+ * verificando se os elementos foram renderizados e estão presentes 
+ * na tela gerada
+ * 
+ * @author: Marc Reinan Gomes
+ */
 
 afterEach(cleanup);
 
@@ -28,13 +30,14 @@ const lastState = {
   joke: ''
 }
 
-/** Wrapper para o redux */
+/** Wrapper para utilizar a store do redux */
 function renderWithRedux(component,{initialState, store}){
   return {
     ...render(<Provider store={store}>{component}</Provider>)
   }
 }
 
+/** Teste dos componentes e das telas do APP*/
 describe('Testes do componente App', () => {
 
   it('Renderiza o título', () => {
