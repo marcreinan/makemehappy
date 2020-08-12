@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import { BrowserRouter as Router, Redirect} from "react-router-dom";
 import { Container } from 'reactstrap';
 import SEO from 'react-seo-component';
 
@@ -10,6 +10,7 @@ import { setHumor, setLink, setModal, setJoke } from "./redux/actions/appActions
 import jokeService from "./services/jokeApiService";
 
 import './assets/styles/global.css';
+import Routes from './routes';
 
 import { APP_NAME, APP_SUBNAME, APP_TITLE} from './constants/envConfig';
 import { Smiley } from './components/Smiley';
@@ -26,7 +27,6 @@ class App extends Component {
     let { 
       setHumor, /** Seta o nivel humor */
       humor,    /** Nivel de humor */
-      setLink,  /** Seta a rota do link */
       link,     /** Rota do link no smiley */
       setModal, /** Seta a visibilidade do modal */
       modal,    /** Visibilidade da modal */
@@ -36,33 +36,22 @@ class App extends Component {
 
     /** Pega uma nova piada na API e seta o nível do humor */
     const buttonHandle = async (props) => {
-      setJoke( await getJoke());
-      let newHumor = props.humor + Math.round((Math.random() * 25));
+      setJoke( await getJoke()); 
+      let random = Math.round((Math.random() * 25));  
+      let newHumor = props.humor + random;
       if(newHumor <= 100){
-        humorHandle(newHumor);
+        setHumor(newHumor);
       }else{
-        humorHandle(100);
+        setHumor(100);
       }
     }
 
-    /** Seta o nível do humor */
-    const humorHandle = humor =>{
-      setHumor(humor);
-    }
-
-    /** Elemento de navegação para setar os estados de acordo com a rota */
-    const NavItem = (props) => {
-      setHumor(props.humor);
-      setLink(props.link);
-      setModal(props.modal);
-      return null;
-    }
-    
     
     return (
       <main>
         {/** Componente SEO  */}
         <SEO
+          siteLanguage="pt-br"
           title={`${APP_TITLE}`}
           titleTemplate={ (link === '/estoutriste' 
                             ? "Home"
@@ -109,26 +98,7 @@ class App extends Component {
                 ?redirect('/')
                 :('')
             }
-            
-            {/** Switch Router */}
-            <Switch>
-              {/** Rota / */}
-              <Route exact path="/">
-                <NavItem humor={0} setHumor={this.setHumor} link={'/estoutriste'} modal={false}/>
-              </Route>
-              {/** Rota /estoutriste */}
-              <Route exact path="/estoutriste">
-                <NavItem humor={-100} setHumor={this.setHumor} link={'/mefacafeliz'} modal={true}/>
-              </Route>
-              {/** Rota /mefacafeliz */}
-              <Route exact path="/mefacafeliz">
-                <NavItem humor={humor} setHumor={this.setHumor} link={'/fim'} modal={modal}/>
-              </Route>
-              {/** Rota /fim */}
-              <Route exact path="/fim">
-                <NavItem humor={0} setHumor={this.setHumor} link={'/estoutriste'} modal={false}/>
-              </Route>
-            </Switch>
+            <Routes/>
           </Router>
         </Container>
       </main>

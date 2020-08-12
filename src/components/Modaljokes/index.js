@@ -29,7 +29,6 @@ const Modaljokes = (props) => {
 
   /** Faz a requisição de uma piada para a api*/
   const nextJoke = ()=> { 
-    setLoading(true);
     getJoke();
     setLoading(false);
   }
@@ -62,19 +61,7 @@ const Modaljokes = (props) => {
           </ModalHeader>
           <ModalBody>
             { (humor >= 100)
-                ? <iframe 
-                    title="Gandalf Sax" 
-                    width="100%" 
-                    height="150" 
-                    src="https://www.youtube.com/embed/G1IbRujko-A" 
-                    frameborder="0" 
-                    allow ="accelerometer; 
-                            autoplay; 
-                            encrypted-media; 
-                            gyroscope; 
-                            picture-in-picture" 
-                    autoplay="1" 
-                    allowfullscreen="1" />
+                ? <img src="http://picsum.photos/400" alt="foto recompensa" />
                 : !(joke)
                     ? `Melhore o humor da nossa SPA contando piadas geek, 
                       cada piada melhora ou piora o seu humor entre 1 e 25%. 
@@ -95,7 +82,10 @@ const Modaljokes = (props) => {
                       size="lg" 
                       color="primary" 
                       disabled={loading} 
-                      onClick={nextJoke}> Próxima Piada
+                      onClick={()=>{
+                        setLoading(true);
+                        nextJoke();
+                      }}> Próxima Piada
                     </Button>
               : <Button 
                   size="lg" 

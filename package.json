@@ -28,8 +28,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build-server": "yarn build && node nodeserver.js",
-    "server": "node nodeserver.js"
+    "build-server": "yarn build && yarn server",
+    "server": "node server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
