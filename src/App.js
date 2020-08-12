@@ -1,22 +1,20 @@
 import React, { Component } from "react";
-import { Container } from 'reactstrap';
 import { BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import { Container } from 'reactstrap';
+
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { setHumor, setLink, setModal, setJoke } from "./actions/appActions";
+import { setHumor, setLink, setModal, setJoke } from "./redux/actions/appActions";
 import jokeService from "./services/jokeApiService";
+
 import './assets/styles/global.css';
 
-import { Smiley } from './components/SmileyComponent';
-import Modaljokes from './components/ModaljokesComponent';
+import { Smiley } from './components/Smiley';
+import Modaljokes from './components/Modaljokes';
 
+import SEO from 'react-seo-component';
 
 class App extends Component {
-  renderJoke = async() => {
-    let joke = await getJoke();
-    setJoke(joke);
-  }
-      
   render() {
     let { 
       setHumor,
@@ -37,23 +35,29 @@ class App extends Component {
       }else{
         humorHandle(100);
       }
-;    }
+    }
 
       const humorHandle = humor =>{
         setHumor(humor);
       }
 
     const NavItem = (props) => {
-      setHumor(props.humor)
-      setLink(props.link)
+      setHumor(props.humor);
+      setLink(props.link);
       setModal(props.modal);
-      return <></>;
+      return null;
     }
     
     
     return (
       <main>
-        <Container fluid className="main">
+        <SEO
+          title={".:: Make Me Happy"}
+          titleTemplate={link === '/estoutriste'? "Home": link === '/mefacafeliz'?"Estou triste": "Me faça feliz"}
+          titleSeparator={`|`}
+          description={"Faça uma SPA feliz, contando piadas para ela com a geek-joke-api, projeto criado com React.js, redux e axios"}
+        />
+        <Container fluid className="main bg-primary" style={{marginTop: 15, paddingBottom: 5}}>
           <Router>
             <h1 className="main-title">
               Make Me Happy <br/>
@@ -63,6 +67,24 @@ class App extends Component {
               link={link}
               humor={humor}
             />
+
+            {link === "/fim"?
+              <Modaljokes
+                setModal={setModal} 
+                modal={modal} 
+                humor={humor}
+                joke={joke} 
+                getJoke={() => { 
+                  buttonHandle(this.props) 
+                }} 
+                />
+                :('')
+            }
+
+            {(humor>=100 && modal === false) || (humor===0 && modal === false)
+              ?redirect('/')
+              :('')
+            }
             
             <Switch>
               <Route exact path="/">
@@ -78,22 +100,6 @@ class App extends Component {
                 <NavItem humor={0} setHumor={this.setHumor} link={'/estoutriste'} modal={false}/>
               </Route>
             </Switch>
-            {link === "/fim"?
-              <Modaljokes
-                setModal={setModal} 
-                modal={modal} 
-                humor={humor}
-                joke={joke} 
-                getJoke={() => { 
-                  buttonHandle(this.props) 
-                }} 
-                />
-                :('')
-            }
-            {(humor>=100 && modal === false) || (humor===0 && modal === false)
-              ?redirect('/')
-              :('')
-            }
           </Router>
         </Container>
       </main>
@@ -101,17 +107,19 @@ class App extends Component {
   }
 }
 const mapStateToProps = store => ({
-  humor: store.appState.humor,
-  link: store.appState.link,
-  modal: store.appState.modal,
-  joke: store.appState.joke,
-});
+    humor: store.appState.humor,
+    link: store.appState.link,
+    modal: store.appState.modal,
+    joke: store.appState.joke,
+  });
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ setHumor, setLink, setModal, setJoke }, dispatch);
   
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 const redirect = link => <Redirect to={link} />;
+
 const getJoke = async () => {
     let joke = '';
     await jokeService.getJoke().then( res => {

@@ -3,7 +3,7 @@ import {
   SET_MODAL, 
   SET_LINK, 
   SET_JOKE 
-} from '../constants/actionsTypes';
+} from '../../constants/actionsTypes';
 
 export const setHumor = value => ({
   type: SET_HUMOR,

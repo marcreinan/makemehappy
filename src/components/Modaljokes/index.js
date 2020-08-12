@@ -1,8 +1,9 @@
 import React from 'react';
+import './styles.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setModal } from "../actions/appActions";
+import { setModal } from "../../redux/actions/appActions";
 
 const Modaljokes = (props) => {
   let { 
@@ -23,12 +24,12 @@ const Modaljokes = (props) => {
     return (
       <>
         <Modal isOpen={modal} className="modalJoke">
-          <ModalHeader>
+          <ModalHeader tag="h3">
             { (joke !== '')
               ?(humor >= 100)
-                ?<h3><span role="img" aria-label="Estrela">✨</span> Parabéns, aqui está sua recompensa!</h3>
-                :<h3><span role="img" aria-label="Livro">📖</span> Ler piada</h3>
-              :<h3><span role="img" aria-label="Estrela">⭐</span> Olá visitante</h3>
+                ?<p><span role="img" aria-label="Estrela">✨</span> Parabéns, aqui está sua recompensa!</p>
+                :<p><span role="img" aria-label="Livro">📖</span> Ler piada</p>
+              :<p><span role="img" aria-label="Estrela">⭐</span> Olá visitante</p>
             }
           </ModalHeader>
           <ModalBody>
@@ -43,9 +44,9 @@ const Modaljokes = (props) => {
           <ModalFooter>
             {(joke !== '')
               ?(humor >= 100)
-                ?(<Button className="btn-lg" color="success" onClick={toggle}>Fechar</Button>)
-                :(<Button className="btn-lg" color="primary" onClick={nextJoke}>Próxima Piada</Button>)
-              :(<Button className="btn-lg" color="info" onClick={nextJoke}>Iniciar</Button>)
+                ?(<Button size="lg" color="success" onClick={toggle}>Fechar</Button>)
+                :(<Button size="lg" color="primary" onClick={nextJoke}>Próxima Piada</Button>)
+              :(<Button size="lg" color="info" onClick={nextJoke}>Iniciar</Button>)
             }            
           </ModalFooter>
         </Modal>
