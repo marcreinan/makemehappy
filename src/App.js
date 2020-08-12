@@ -1,3 +1,10 @@
+/**
+ * App.js - Core da aplicação, responsável por instanciar os componentes,
+ * gerenciar o estado e as rotas
+ * 
+ * @author: Marc Reinan Gomes
+ */
+
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import { Container } from 'reactstrap';
@@ -53,16 +60,19 @@ class App extends Component {
       <main>
         <SEO
           title={".:: Make Me Happy"}
-          titleTemplate={link === '/estoutriste'? "Home": link === '/mefacafeliz'?"Estou triste": "Me faça feliz"}
+          titleTemplate={(link === '/estoutriste'? "Home": link === '/mefacafeliz'?"Estou triste": "Me faça feliz") }
           titleSeparator={`|`}
           description={"Faça uma SPA feliz, contando piadas para ela com a geek-joke-api, projeto criado com React.js, redux e axios"}
         />
-        <Container fluid className="main bg-primary" style={{marginTop: 15, paddingBottom: 5}}>
+ 
+        <Container fluid className="main bg-primary">
           <Router>
+
             <h1 className="main-title">
               Make Me Happy <br/>
               <small>Conte piadas e faça uma SPA feliz</small>
             </h1>
+
             <Smiley
               link={link}
               humor={humor}

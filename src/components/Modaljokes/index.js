@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setModal } from "../../redux/actions/appActions";
 
+/**
+ * Componente Modal que exibe as piadas geek, 
+ * baseado no componente modal do boostrap 
+ */
 const Modaljokes = (props) => {
+  const [loading, setLoading] = useState(false);
+
   let { 
     modal,
     humor,
@@ -13,13 +20,18 @@ const Modaljokes = (props) => {
     joke,
     getJoke 
   } = props;
-
   
+  /** Seta a visibilidade da modal */
   const toggle = ()=> {
      setModal(!modal);
   }
 
-  const nextJoke = ()=> { getJoke() }
+  /** Faz a requisição de uma piada para a api */
+  const nextJoke = ()=> { 
+    setLoading(true);
+    getJoke();
+    setLoading(false);
+  }
   
     return (
       <>
@@ -35,7 +47,7 @@ const Modaljokes = (props) => {
           <ModalBody>
             {
               (humor >= 100)
-              ? <iframe title="Gandalf Sax" width="100%" height="200" src="https://www.youtube.com/embed/G1IbRujko-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" autoplay="1" allowfullscreen></iframe>
+              ? <iframe title="Gandalf Sax" width="100%" height="150" src="https://www.youtube.com/embed/G1IbRujko-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" autoplay="1" allowfullscreen></iframe>
               :!(joke)
                 ?`Melhore o humor da nossa SPA contando piadas geek, cada piada melhora ou piora o seu humor entre 1 e 25%. Caso fique 100% feliz, ela libera uma recompensa. Boa sorte 🖖`
                 :(joke)
@@ -45,7 +57,7 @@ const Modaljokes = (props) => {
             {(joke !== '')
               ?(humor >= 100)
                 ?(<Button size="lg" color="success" onClick={toggle}>Fechar</Button>)
-                :(<Button size="lg" color="primary" onClick={nextJoke}>Próxima Piada</Button>)
+                :(<Button size="lg" color="primary" disable={loading} onClick={nextJoke}>Próxima Piada</Button>)
               :(<Button size="lg" color="info" onClick={nextJoke}>Iniciar</Button>)
             }            
           </ModalFooter>

@@ -3,7 +3,7 @@ import {
   SET_MODAL, 
   SET_LINK, 
   SET_JOKE
-} from '../../constants/actionsTypes';
+} from '../actions/actionsTypes';
 
 const initialState = { 
   humor: 0, 

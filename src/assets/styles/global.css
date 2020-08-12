@@ -1,3 +1,12 @@
+/**
+Theme Name: Make Me Happy
+Author: Marc Reinan Gomes
+Description: Tema global do app Make Me Happy
+Version: 0.1.0
+*/
+
+/*   Structure Styles
+=======================================================*/
 :root {
   font-size: 60%;
 }
@@ -16,7 +25,6 @@ body{
 
   font-family: 'Roboto', sans-serif;
   font-size: 2rem;
-
 }
 
 *{
@@ -29,13 +37,6 @@ html, body, #root, main {
   height: 100vh;
 }
 
-#root{
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  overflow: hidden;
-}
-
 a{
   text-decoration: none;
   -webkit-touch-callout: none;
@@ -46,10 +47,21 @@ a{
    user-select: none;
 }
 
+#root{
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/*   Main Container Styles
+=======================================================*/
 .main{
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin-top: 15px;
+  padding-bottom: 10px;
 }
 
 .main-title{

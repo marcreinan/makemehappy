@@ -1,3 +1,7 @@
+/**
+ * Constantes de nomes de funções para uso nas actions e reducers 
+ */
+
 export const SET_HUMOR = 'SET_HUMOR';
 export const SET_LINK = 'SET_LINK';
 export const SET_MODAL = 'SET_MODAL';

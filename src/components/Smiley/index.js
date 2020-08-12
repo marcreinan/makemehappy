@@ -32,7 +32,7 @@ export const Smiley = (props) => {
                           :'smiley smiley-triste'
                         :'smiley smiley-normal'}>
           <Link 
-            title="Click me!" 
+            title="Clique e me faça feliz" 
             to={props.link}
           >
             <span role="img" aria-label="smiley">{IconComponent(props.humor)}</span>
@@ -54,22 +54,22 @@ export const IconComponent = (humor) => {
   if(humor >= 75){
     return "😅";
   }
-  if(humor >= 65){
-    return "😄";
-  }
   if(humor >= 50){
     return "😄";
   }
   if(humor >= 35){
+    return "😄";
+  }
+  if(humor >= 25){
     return "😊";
   }
-  if(humor >= 20){
+  if(humor >= 15){
     return "😏";
   }
-  if(humor >= 10){
+  if(humor >= 1){
     return "🙂";
   }
-  if(humor >= 0){
+  if(humor === 0){
     return "😐";
   }
   if(humor >= -15){
